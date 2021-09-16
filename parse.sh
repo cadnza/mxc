@@ -20,15 +20,17 @@ m=".mxc"
 		exit 0
 	}
 	# Parse git repo back to root for .mxc if in a git repo
-	dGit=$(git rev-parse --show-toplevel)
-	while [[ $d != $dGit ]]
-	do
-		d=$(dirname $d)
-		[[ -f "$d/$m" ]] && {
-			echo "$d/$m"
-			exit 0
-		}
-	done
+	dGit=$(git rev-parse --show-toplevel 2> /dev/null)
+	[[ -d $dGit ]] && {
+		while [[ $d != $dGit ]]
+		do
+			d=$(dirname $d)
+			[[ -f "$d/$m" ]] && {
+				echo "$d/$m"
+				exit 0
+			}
+		done
+	}
 }
 
 # Return original buffer address
