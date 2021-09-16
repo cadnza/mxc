@@ -40,11 +40,21 @@ function driver(lookForMxcFile)
 	local bp = micro.CurPane()
 	-- Get path of current file in buffer
 	local fPath = bp.Buf.AbsPath
-	-- Test whether current buffer path is a file
-	if check(d.."checks/checkBuffer.sh", fPath, "Please save the buffer.") == 1 then
-		return
+	-- Run parse script
+	local parseScript = d.."parse.sh"
+	local parseScriptString
+	if lookForMxcFile then
+		parseScriptString = parseScript.." "..fPath.." ".."1"
+	else
+		parseScriptString = parseScript.." "..fPath
 	end
-	if check(d.."checks/checkExecutable.sh", fPath, fPath.." is not executable.") == 1 then
+	local targetFile, err = shell.RunCommand(parseScriptString)
+	-- Run validation script
+	local validateScript = d.."validate.sh"
+	local validateScriptString = validateScript.." "..targetFile
+	local msg, err = shell.RunCommand(validateScriptString)
+	if err ~= nil then
+		micro.InfoBar():Error(msg)
 		return
 	end
 	-- Save buffer if option set
@@ -52,16 +62,10 @@ function driver(lookForMxcFile)
 	if doSave then
 		bp:Save()
 	end
-	-- Run main script
-	local mainScript = d.."main.sh"
-	local scriptString
-	if lookForMxcFile then
-		scriptString = mainScript.." "..fPath.." ".."1"
-	else
-		scriptString = mainScript.." "..fPath
-	end
-	local str, err = shell.RunInteractiveShell(scriptString, true, false)
-	-- Show any error
+	-- Run execute script
+	local executeScript = d.."execute.sh"
+	local executeScriptString = executeScript.." "..targetFile
+	local str, err = shell.RunInteractiveShell(executeScriptString, true, false)
 	if err ~= nil then
 		micro.InfoBar():Error(err)
 	end
