@@ -25,14 +25,6 @@ function mxcx()
 	driver(true)
 end
 
-function check(script, arg, message)
-	local rtn, err = tonumber(shell.ExecCommand(script, arg))
-	if rtn == 1 then
-		micro.InfoBar():Error(message)
-	end
-	return rtn
-end
-
 function driver(lookForMxcFile)
 	-- Set plugin directory
 	local d = os.getenv("HOME").."/.config/micro/plug/mxc/"
