@@ -1,17 +1,5 @@
 #!/usr/bin/env sh
 
-# Get function to run script if executable
-runScript() {
-	[[ -x $1 ]] && {
-		echo "\033[1;36m$1\033[0m"
-		$1
-		exit 0
-	} || {
-		echo "\033[1;31m$1 is not executable.\033[0m"
-		exit 126
-	}
-}
-
 # Get buffer address
 f=$(readlink -n $1)
 [[ -f $f ]] || f=$1
