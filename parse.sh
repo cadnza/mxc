@@ -2,7 +2,6 @@
 
 # Get buffer address
 f=$(readlink -n $1)
-[[ -f $f ]] || f=$1
 
 # Check if buffer addresss is a directory and return it if find .mxc isn't specified
 [[ -d $f ]] && [[ $2 = 1 ]] || {
