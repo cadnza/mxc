@@ -51,8 +51,7 @@ function driver(lookForMxcFile)
 	local targetFile, err = shell.RunCommand(parseScriptString)
 	-- Run validation script
 	local validateScript = d.."validate.sh"
-	local validateScriptString = validateScript.." "..targetFile
-	local msg, err = shell.RunCommand(validateScriptString)
+	local msg, err = shell.ExecCommand(validateScript, targetFile)
 	if err ~= nil then
 		micro.InfoBar():Error(msg)
 		return
