@@ -25,18 +25,35 @@ function mxcx()
 	driver(true)
 end
 
+function check(script, arg, message)
+	local rtn, err = tonumber(shell.ExecCommand(script, arg))
+	if rtn == 1 then
+		micro.InfoBar():Error(message)
+	end
+	return rtn
+end
+
 function driver(lookForMxcFile)
+	-- Set plugin directory
+	local d = os.getenv("HOME").."/.config/micro/plug/mxc/"
 	-- Get current pane
 	local bp = micro.CurPane()
+	-- Get path of current file in buffer
+	local fPath = bp.Buf.AbsPath
+	-- Test whether current buffer path is a file
+	if check(d.."checks/checkBuffer.sh", fPath, "Please save the buffer.") == 1 then
+		return
+	end
+	if check(d.."checks/checkExecutable.sh", fPath, fPath.." is not executable.") == 1 then
+		return
+	end
 	-- Save buffer if option set
 	local doSave = config.GetGlobalOption("mxc.saveOnRun")
 	if doSave then
 		bp:Save()
 	end
-	-- Get path of current file in buffer
-	local fPath = bp.Buf.AbsPath
 	-- Run main script
-	local mainScript = os.getenv( "HOME" ).."/.config/micro/plug/mxc/main.sh"
+	local mainScript = d.."main.sh"
 	local scriptString
 	if lookForMxcFile then
 		scriptString = mainScript.." "..fPath.." ".."1"
