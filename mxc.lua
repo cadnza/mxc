@@ -39,7 +39,7 @@ function driver(lookForMxcFile)
 	-- Get current pane
 	local bp = micro.CurPane()
 	-- Get path of current file in buffer
-	local fPath = bp.Buf.AbsPath
+	local fPath = "\""..bp.Buf.AbsPath.."\""
 	-- Run parse script
 	local parseScript = d.."parse.sh"
 	local parseScriptString
