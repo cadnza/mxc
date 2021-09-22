@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Get buffer address
-f=$(readlink -n $1)
+f=$(realpath $1)
 
 # Go to buffer directory
 [[ -d $f ]] && cd $f || cd "${f%/*}"
