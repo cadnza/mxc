@@ -6,7 +6,7 @@ f=$(readlink -n $1)
 # Go to buffer directory
 [[ -d $f ]] && cd $f || cd $(dirname $f)
 
-# Check if buffer addresss is a directory and return it if find .mxc isn't specified
+# Check if buffer address is a directory and return it if find .mxc isn't specified
 [[ -d $f ]] && [[ $2 -ne 1 ]] && {
 	echo $f
 	exit 0
