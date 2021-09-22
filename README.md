@@ -6,7 +6,7 @@ Handy script runner for [micro](https://micro-editor.github.io/index.html). Spee
 
 ## Install
 
-You'll want to get it from [micro's plugin site](https://micro-editor.github.io/plugins.html), but it it's not there yet (see [#73](https://github.com/micro-editor/plugin-channel/pull/73)), you can always do the following:
+You'll want to get it from [micro's plugin site](https://micro-editor.github.io/plugins.html), but if it's not there yet (see [#73](https://github.com/micro-editor/plugin-channel/pull/73)), you can always do the following:
 
 1. Download the [latest release](https://github.com/cadnza/mxc/releases/latest)
 2. Place the unzipped `mxc` directory in `~/.config/micro/plug` (create the `plug` directory if it doesn't already exist)
