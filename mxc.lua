@@ -40,6 +40,11 @@ function driver(lookForMxcFile)
 	else
 		targetFile, err = shell.ExecCommand(parseScript, fPath)
 	end
+	if err ~= nil then
+		local msg = "mxc: .mxc not found"
+		micro.InfoBar():Error(msg)
+		return
+	end
 	-- Run validation script
 	local validateScript = d.."validate.sh"
 	local msg, err = shell.ExecCommand(validateScript, targetFile)

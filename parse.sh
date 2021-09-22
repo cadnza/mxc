@@ -34,6 +34,8 @@ m=".mxc"
 			}
 		done
 	}
+	# Exit with error if .mxc not found
+	exit 1
 }
 
 # Return original buffer address
