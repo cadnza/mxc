@@ -4,7 +4,7 @@
 f=$(readlink -n $1)
 
 # Go to buffer directory
-[[ -d $f ]] && cd $f || cd $(dirname $f)
+[[ -d $f ]] && cd $f || cd "${f%/*}"
 
 # Check if buffer address is a directory and return it if find .mxc isn't specified
 [[ -d $f ]] && [[ $2 -ne 1 ]] && {
@@ -16,7 +16,7 @@ f=$(readlink -n $1)
 m=".mxc"
 [[ $2 = 1 ]] && {
 	# Get containing directory if buffer address is a file (or use buffer address if it's a directory)
-	[[ -d $f ]] && d=$f || d=$(dirname $f)
+	[[ -d $f ]] && d=$f || d="${f%/*}"
 	# Check for .mxc in immediate directory
 	[[ -f "$d/$m" ]] && {
 		echo "$d/$m"
@@ -27,7 +27,7 @@ m=".mxc"
 	[[ -d $dGit ]] && {
 		while [[ $d != $dGit ]]
 		do
-			d=$(dirname $d)
+			d="${d%/*}"
 			[[ -f "$d/$m" ]] && {
 				echo "$d/$m"
 				exit 0

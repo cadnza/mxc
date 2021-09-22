@@ -54,7 +54,7 @@ function driver(lookForMxcFile)
 	end
 	-- Run execute script
 	local executeScript = d.."execute.sh"
-	local executeScriptString = executeScript.." "..targetFile
+	local executeScriptString = executeScript.." ".."'"..targetFile.."'"
 	local str, err = shell.RunInteractiveShell(executeScriptString, true, false)
 	if err ~= nil then
 		micro.InfoBar():Error(err)
