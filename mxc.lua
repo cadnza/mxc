@@ -31,16 +31,15 @@ function driver(lookForMxcFile)
 	-- Get current pane
 	local bp = micro.CurPane()
 	-- Get path of current file in buffer
-	local fPath = "\""..bp.Buf.AbsPath.."\""
+	local fPath = bp.Buf.AbsPath
 	-- Run parse script
 	local parseScript = d.."parse.sh"
-	local parseScriptString
+	local targetFile, err
 	if lookForMxcFile then
-		parseScriptString = parseScript.." "..fPath.." ".."1"
+		targetFile, err = shell.ExecCommand(parseScript, fPath, "1")
 	else
-		parseScriptString = parseScript.." "..fPath
+		targetFile, err = shell.ExecCommand(parseScript, fPath)
 	end
-	local targetFile, err = shell.RunCommand(parseScriptString)
 	-- Run validation script
 	local validateScript = d.."validate.sh"
 	local msg, err = shell.ExecCommand(validateScript, targetFile)
